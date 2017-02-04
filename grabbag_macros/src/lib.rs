@@ -117,16 +117,16 @@ macro_rules! collect {
     };
 
     // Initialise a sequence with a fully inferred contained type.
-    [$($vs:expr),+] => { collect![into _: $($vs),+] };
+    [$($vs:expr),+ $(,)*] => { collect![into _: $($vs),+] };
 
     // Initialise a map with a constrained container type.
-    [into $col_ty:ty: $($ks:expr => $vs:expr),+] => {
+    [into $col_ty:ty: $($ks:expr => $vs:expr),+ $(,)*] => {
         // Maps implement FromIterator by taking tuples, so we just need to rewrite each `a:b` as `(a,b)`.
         collect![into $col_ty: $(($ks, $vs)),+]
     };
 
     // Initialise a map with a fully inferred contained type.
-    [$($ks:expr => $vs:expr),+] => { collect![into _: $($ks => $vs),+] };
+    [$($ks:expr => $vs:expr),+ $(,)*] => { collect![into _: $($ks => $vs),+] };
 }
 
 /**
